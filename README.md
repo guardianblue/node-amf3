@@ -25,7 +25,7 @@ fs.readFile(file, function(err, data) {
 });
 ```
 
-- __Custom Externalizables__  
+- __Custom Externalizables__
 Simply extend the Externalizable class and register it in the decoder to allow for the custom encoding of objects. The `write` method will be called whenever an Externalizable needs to be encoded and the `this` value will be set to the encoder. The static `read` method will be called whenever an object with the Externizable's class is found. As with `write`, while invoking `read` the `this` value is set to the decoder.
 
 ```javascript
@@ -33,17 +33,18 @@ var NodeAMF = require('node-amf3'),
     Externalizable = NodeAMF.Externalizable;
 
 class MyModel extends Externalizable {
+
     constructor() {
         super("name.of.the.model");
     }
 
-    write() {
-        MyModel.write(this.value);
+    write(writable) {
+        writable.write(this.value);
     }
 
-    static read() {
+    static read(decoder) {
         var model = new MyModel();
-        model.value = MyModel.readByte();
+        model.value = decoder.readByte();
 
         return model;
     }
