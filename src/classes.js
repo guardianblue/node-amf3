@@ -47,9 +47,10 @@ class Serializable {
  * Note that the read function is static and is supposed to return a new
  * instance of the class it decodes.
  */
-class Externalizable {
+class Externalizable extends Serializable {
 
     constructor(externalizableName) {
+        super(externalizableName);
         this.externalizableName = externalizableName;
     }
 
