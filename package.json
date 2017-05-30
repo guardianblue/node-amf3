@@ -1,6 +1,6 @@
 {
   "name": "node-amf3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AMF (ActionScript Message Format) Version 3 library for Node.js",
   "main": "lib/index.js",
   "directories": {
