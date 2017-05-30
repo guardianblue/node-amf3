@@ -7,12 +7,17 @@ This library is based on [ProjectCryo's AMF.js project](https://github.com/Proje
 
     npm install [--save] node-amf3
 
+# AMF0 support
+
+AMF0 **is not** supported by this library.
+
 # Usage
-- __Encoding__
+
+## Encoding
 
 Coming soon
 
-- __Decoding__
+## Decoding
 
 ```javascript
 var Decoder = require('node-amf3').Decoder;
@@ -25,21 +30,19 @@ fs.readFile(file, function(err, data) {
 });
 ```
 
-- __Custom Externalizables__
-Simply extend the Externalizable class and register it in the decoder to allow for the custom encoding of objects. The `write` method will be called whenever an Externalizable needs to be encoded and the `this` value will be set to the encoder. The static `read` method will be called whenever an object with the Externizable's class is found. As with `write`, while invoking `read` the `this` value is set to the decoder.
+## Custom Externalizables
+Simply extend the Externalizable class and register it in the decoder to allow for the custom encoding of objects.
+
+* Pass the fully qualified name to the constructor
+* The static `read` method will be called whenever an object with the Externizable's class is found.
 
 ```javascript
-var NodeAMF = require('node-amf3'),
-    Externalizable = NodeAMF.Externalizable;
+import { Decoder, Externalizable } from 'node-amf3';
 
 class MyModel extends Externalizable {
 
     constructor() {
         super("name.of.the.model");
-    }
-
-    write(writable) {
-        writable.write(this.value);
     }
 
     static read(decoder) {
