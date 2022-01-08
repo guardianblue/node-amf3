@@ -161,8 +161,8 @@ export default class Decoder {
                 return this.decodeVectorImpl(this.readDoubleBE);
             case Marker.VECTOR_OBJECT:
                 return this.decodeVectorImpl(this.decode);
-
-
+            case Marker.DICTIONARY:
+                return this.decodeDictionary();
         }
 
         throw new Error('Unknown marker type:', marker);
@@ -374,14 +374,14 @@ export default class Decoder {
         // Not used by NodeJS implementation
         this.readByte();
 
-        let result = {},
+        let result = new Map(),
             numElements = header.value;
 
         this.objectRefs.push(result);
         for (let i = 0; i < numElements; i++) {
-            let key = JSON.stringify(this.decode());
+            let key = this.decode();
 
-            result[key] = this.decode();
+            result.set(key, this.decode());
         }
 
         return result;
